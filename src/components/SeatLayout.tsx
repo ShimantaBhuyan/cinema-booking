@@ -9,29 +9,37 @@ const checkIfSeatIsReserved = (row: number, column: number, seats: SeatProps[] |
     return seats.some(({row: reservedRow, column: reservedColumn}) => row === reservedRow && column === reservedColumn);
 }
 
-const SeatLayout = ({rows, columns, reservedSeats, prices}: SeatLayoutProps) => {
-    return (
-        <SeatLayoutWrapper>
-            <SeatPriceContainer>
-                {
-                    [...Array(rows)].map((_, rowIndex) => {
-                        return (
-                            <span key={`seat-price-row-${rowIndex}`}>&#8377;{prices[rowIndex]}</span>
-                        )
-                    })
-                }
-            </SeatPriceContainer>
+const checkIfSeatIsSelected = (row: number, column: number, seats: SeatProps[] | undefined): boolean => {
+    if(!seats) return false;
+    return seats.some(({row: selectedRow, column: selectedColumn}) => row === selectedRow && column === selectedColumn);
+}
+
+const SeatLayout = ({rows, columns, selectedSeats, reservedSeats, prices, adminMode}: SeatLayoutProps) => {
+    return ( (rows && columns) ? <SeatLayoutWrapper>
+            {prices && prices.length === rows ? 
+                <SeatPriceContainer>
+                    {
+                        [...Array(rows)].map((_, rowIndex) => {
+                            return (
+                                <span key={`seat-price-row-${rowIndex}`}>&#8377;{prices[rowIndex]}</span>
+                            )
+                        })
+                    }
+                </SeatPriceContainer> : 
+                null
+            }
             <SeatLayoutContainer totalRows={rows} totalcolumns={columns}>
                 {
                     [...Array(rows)].map((_, rowIndex) => {
                         return [...Array(columns)].map((_, columnIndex) => {
-                            return <Seat key={`seat-${rowIndex}-${columnIndex}`} row={rowIndex} column={columnIndex} isReserved={checkIfSeatIsReserved(rowIndex, columnIndex, reservedSeats)}/>
+                            return <Seat key={`seat-${rowIndex}-${columnIndex}`} row={rowIndex} column={columnIndex} isReserved={checkIfSeatIsReserved(rowIndex, columnIndex, reservedSeats)} adminMode={adminMode} isSelected={checkIfSeatIsSelected(rowIndex, columnIndex, selectedSeats)}/>
                         })
                     })
                 }
             </SeatLayoutContainer>
-        </SeatLayoutWrapper>
-    )
+        </SeatLayoutWrapper> :  <p>Seat Layout not set yet!</p>)
+        
+    
 }
 
 const SeatLayoutWrapper = styled.div`
