@@ -37,6 +37,7 @@ const StyledNavbar = styled.nav`
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
     position: relative;
+    color: #000;
 `
 
 const StyledNavbarItem = styled.div`
@@ -47,7 +48,6 @@ const StyledNavbarItem = styled.div`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
-    color: #000;
     font-size: 1.2rem;
     font-weight: 600;
 `

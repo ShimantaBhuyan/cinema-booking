@@ -5,25 +5,32 @@ import MainContent from "@/components/MainContent";
 import Navbar from "@/components/Navbar";
 import SeatLayout from '@/components/SeatLayout';
 import SeatLegend from "@/components/SeatLegend";
+import Screen from '@/components/Screen';
 
-
-const reservedSeats = [
-    { row: 0, column: 1 },
-    { row: 1, column: 2 },
-    { row: 2, column: 3 },
-]
+const DUMMY_SEAT_LAYOUT = {
+    rows: 5,
+    columns: 10,
+    reservedSeats: [
+        { row: 0, column: 1 },
+        { row: 1, column: 2 },
+        { row: 2, column: 3 },
+    ],
+    prices: [500, 400, 300, 250, 200]
+}
 
 const CinemaLayout = () => {
     return (
         <Container>
             <Navbar />
             <MainContent>
-                {/* <Seat/>
-                <Seat isReserved={true}/>
-                <Seat/>
-                <Seat/> */}
                 <SeatLegend />
-                <SeatLayout rows={5} columns={10} reservedSeats={reservedSeats}/>
+                <SeatLayout 
+                    rows={DUMMY_SEAT_LAYOUT.rows} 
+                    columns={DUMMY_SEAT_LAYOUT.columns} 
+                    reservedSeats={DUMMY_SEAT_LAYOUT.reservedSeats}
+                    prices={DUMMY_SEAT_LAYOUT.prices}
+                />
+                <Screen />
             </MainContent>
         </Container>
     )

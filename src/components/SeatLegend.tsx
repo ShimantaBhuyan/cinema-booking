@@ -30,6 +30,7 @@ const SeatLegendContainer = styled.div`
     background-color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 2rem;
+    margin: 20px 0;
 `
 
 const SeatLegendItem = styled.div<{ type: number, title: string }>`

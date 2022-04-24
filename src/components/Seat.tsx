@@ -4,17 +4,13 @@ import styled from 'styled-components';
 // Seat icons created by Bartama Graphic - Flaticon : https://www.flaticon.com/free-icons/seat
 import SeatIcon from '@/assets/car-seat.svg';
 import { COLORS } from '../constants';
-
-interface SeatProps {
-    row: number;
-    column: number;
-    isReserved?: boolean;
-}
+import { SeatProps } from 'src/customTypes';
 
 const Seat = ({row, column, isReserved}: SeatProps) => {
     const [isSelected, setIsSelected] = useState(false);
     return (
         <StyledSeatIcon 
+            id={`seat-${row}-${column}`}
             isReserved={isReserved} 
             onClick={() => {
                 if(!isReserved) setIsSelected(!isSelected);

@@ -2,36 +2,44 @@ import React from "react";
 import styled from "styled-components";
 
 import Seat from "@/components/Seat";
-interface ReservedSeatProps {
-    row: number;
-    column: number;
+import { SeatProps, SeatLayoutProps } from "src/customTypes";
+
+const checkIfSeatIsReserved = (row: number, column: number, seats: SeatProps[] | undefined): boolean => {
+    if(!seats) return false;
+    return seats.some(({row: reservedRow, column: reservedColumn}) => row === reservedRow && column === reservedColumn);
 }
 
-interface SeatLayoutProps {
-    rows: number;
-    columns: number;
-    prices?: number[];
-    reservedSeats?: ReservedSeatProps[];
-}
-
-const checkIfSeatIsReserved = (row: number, column: number, reservedSeats: ReservedSeatProps[] | undefined): boolean => {
-    if(!reservedSeats) return false;
-    return reservedSeats.some(({row: reservedRow, column: reservedColumn}) => row === reservedRow && column === reservedColumn);
-}
-
-const SeatLayout = ({rows, columns, reservedSeats}: SeatLayoutProps) => {
+const SeatLayout = ({rows, columns, reservedSeats, prices}: SeatLayoutProps) => {
     return (
-        <SeatLayoutContainer totalRows={rows} totalcolumns={columns}>
-            {
-                [...Array(rows)].map((_, rowIndex) => {
-                    return [...Array(columns)].map((_, columnIndex) => {
-                        return <Seat key={`seat-${rowIndex}-${columnIndex}`} row={rowIndex} column={columnIndex} isReserved={checkIfSeatIsReserved(rowIndex, columnIndex, reservedSeats)}/>
+        <SeatLayoutWrapper>
+            <SeatPriceContainer>
+                {
+                    [...Array(rows)].map((_, rowIndex) => {
+                        return (
+                            <span key={`seat-price-row-${rowIndex}`}>&#8377;{prices[rowIndex]}</span>
+                        )
                     })
-                })
-            }
-        </SeatLayoutContainer>
+                }
+            </SeatPriceContainer>
+            <SeatLayoutContainer totalRows={rows} totalcolumns={columns}>
+                {
+                    [...Array(rows)].map((_, rowIndex) => {
+                        return [...Array(columns)].map((_, columnIndex) => {
+                            return <Seat key={`seat-${rowIndex}-${columnIndex}`} row={rowIndex} column={columnIndex} isReserved={checkIfSeatIsReserved(rowIndex, columnIndex, reservedSeats)}/>
+                        })
+                    })
+                }
+            </SeatLayoutContainer>
+        </SeatLayoutWrapper>
     )
 }
+
+const SeatLayoutWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin-left: -150px;
+`
 
 const SeatLayoutContainer = styled.div<Pick<SeatLayoutProps, 'totalRows' | 'totalcolumns'>>`
     display: grid;
@@ -39,6 +47,15 @@ const SeatLayoutContainer = styled.div<Pick<SeatLayoutProps, 'totalRows' | 'tota
     grid-template-rows: repeat(${({totalRows}) => totalRows}, 50px);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
+`
+
+const SeatPriceContainer = styled.div<Pick<SeatLayoutProps, 'totalRows'>>`
+    display: grid;
+    grid-template-columns: repeat(1, 100px);
+    grid-template-rows: repeat(${({totalRows}) => totalRows}, 100px);
+    grid-row-gap: 10px;
+    justify-content: center;
+    align-items: center;
 `
 
 export default SeatLayout;
