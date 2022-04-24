@@ -1,19 +1,18 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 
-import Seat from '@/components/Seat';
+import Container from "@/components/Container";
+import MainContent from "@/components/MainContent";
+import Navbar from "@/components/Navbar";
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
-      <Seat/>
-      <Seat isReserved={true}/>
-      <Seat/>
-      <Seat/>
-    </div>
-  )
+    <Container>
+        <Navbar />
+        <MainContent>
+            {/* LANDING PAGE COMPONENT */}
+        </MainContent>
+    </Container>
+)
 }
 
 export default Home
