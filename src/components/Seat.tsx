@@ -6,10 +6,12 @@ import SeatIcon from '@/assets/car-seat.svg';
 import { COLORS } from '../constants';
 
 interface SeatProps {
+    row: number;
+    column: number;
     isReserved?: boolean;
 }
 
-const Seat = ({isReserved}: SeatProps) => {
+const Seat = ({row, column, isReserved}: SeatProps) => {
     const [isSelected, setIsSelected] = useState(false);
     return (
         <StyledSeatIcon 
@@ -30,6 +32,7 @@ const StyledSeatIcon = styled(SeatIcon)<SeatStyleProps>`
     width: 48px;
     height: 48px;
     fill: ${({isReserved, isSelected}) => isReserved ? COLORS.SEAT_RESERVED : isSelected ? COLORS.SEAT_SELECTED : COLORS.SEAT_AVAILABLE};
+    cursor: pointer;
 `
 
 export default Seat;

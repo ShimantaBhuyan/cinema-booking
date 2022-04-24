@@ -32,6 +32,7 @@ const StyledNavbar = styled.nav`
     padding: 0 1rem;
     height: 4rem;
     width: 100%;
+    border-radius: 5px;
     background-color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
@@ -41,6 +42,7 @@ const StyledNavbar = styled.nav`
 const StyledNavbarItem = styled.div`
     display: flex;
     align-items: center;
+    cursor: pointer;
 `
 
 const StyledLink = styled(Link)`
@@ -48,7 +50,6 @@ const StyledLink = styled(Link)`
     color: #000;
     font-size: 1.2rem;
     font-weight: 600;
-    cursor: pointer;
 `
 
 const StyledLinkText = styled.span`
